@@ -1,0 +1,30 @@
+body{
+    font-family: 'Roboto', sans-serif;
+}
+.footer{
+    display: fixed;
+    margin-top: 35%;
+    background-color: rgba(49, 43, 43, 0.93);
+    color: white;
+    text-align: center;
+    height: 5rem;
+}
+
+.navbar-nav{
+    margin-right: 10%;
+}
+.banner{
+    width:90%;
+    height: 400px;
+    margin-left: 5rem;
+    margin-top: 5rem;
+}
+.navbar{
+    font-size: large;
+    font-weight: 500;
+    
+}
+.nav-item:hover{
+    background-color:rgba(3, 137, 63, 0.8);
+    border-radius: 10%;
+}
