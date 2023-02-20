@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-5">
+                <h3 class="text-center">
+                    Enquiry Form
+                </h3>
+                <form action="" method="post">
+                    {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class='form-label'>Name</label>
+                            <input class='form-control' type="text" name='name' placeholder='Enter your name'>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dob" class='form-label'>Date of Birth</label>
+                            <input class='form-control' type="date" name='dob'>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age" class='form-label'>Age</label>
+                            <input class='form-control' type="number" name='age' placeholder="Enter your age">
+                        </div>
+                        <div class="mb-3">
+                            <p>Enter your gender : </p>
+                            <input type="radio" id='male' name="gender" value="Male">
+                            <label for="male">Male</label><br>
+                            <input type="radio" id='female' name="gender" value="Female">
+                            <label for="male">Female</label><br>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="text" name="phone" class="form-control" placeholder="Enter your phone number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="example@gmail.com">
+                        </div>
+                        <div class="mb-3">
+                            <p>Select Department</p>
+                            <select name="department" id="department" class="form-control">       
+                                <option value="0">--Select Department--</option> 
+                                {% for i in departments %}  
+                                <option value="{{i.id}}">{{i.department}}</option>
+                                {% endfor %}  
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p>Select Course</p>
+                            <select name="course" id="course" class="form-control">       
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p>Purpose</p>
+                            <select name="purpose"  class="form-control">
+                                <option value="0">--Select Purpose--</option>
+                                <option name='enquiry' value="enquiry">Enquiry</option>      
+                                <option name='order' value="order">Place Order</option> 
+                                <option name='return' value="return">Return</option>     
+                            </select>
+                        </div>
+                        <div class=" mt-3 mb-3">
+                            <p>Materials Provide : </p>
+                            <input type="checkbox" value="Pen">
+                            <label > Pen</label><br>
+                            <input type="checkbox" value="exampaper">
+                            <label > Exam papers</label><br>
+                            <input type="checkbox" value="notebook">
+                            <label > Note Book</label><br>
+
+                        </div>
+                        {% for i in messages  %}
+                        <h5>{{i}}</h5>
+                        <a class="float-end" href="{% url 'home' %}">Home Page</a>
+                        {% endfor %}
+
+                        <div class="mt-5 mb-3">
+
+                            <button class="btn btn-success" type="submit">Submit</button>
+                            <a class="float-end btn btn-success" href="{% url 'logout' %}">Logout</a>
+                        </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+          $('#department').change(function() {
+            var department_id = $(this).val();
+            $.ajax({
+              url: "{% url 'get_courses' 0 %}".replace('0', department_id),
+              success: function(data) {
+                var course_select = $('#course');
+                course_select.empty();
+                $.each(data, function(index, course) {
+                  course_select.append('<option value="' + course.id + '">' + course.name + '</option>');
+                });
+              }
+            });
+          });
+        });
+      </script>
+{% endblock content %}
+
